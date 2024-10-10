@@ -1,21 +1,17 @@
-name: HAT_SRx4_ImageNet-LR
-model_type: HATModel
-scale: 4
-num_gpu: 1  # set num_gpu: 0 for cpu mode
-manual_seed: 0
+TRAINING
+Before X11 forwarding on terminal:
+$ defaults write org.macosforge.xquartz.X11 enable_iglx -bool true
 
-tile:
-  tile_size: 512 # max patch size for the tile mode
-  tile_pad: 32
-  
+TESTING
+Set options under options/test/:
+num_gpu: 0 for running on cpu
 datasets:
   test_1:  # the 1st test dataset
-    name: custom
-    type: SingleImageDataset
-    dataroot_lq: input_dir
+    name: ...NAME...
+    type: SingleImageDataset ### Change this if ground truths are known
+    dataroot_lq: /Users/varun/Documents/repos/HAT/datasets/...DATASET...
     io_backend:
       type: disk
-
 # network structures
 network_g:
   type: HAT
@@ -34,15 +30,15 @@ network_g:
   mlp_ratio: 2
   upsampler: 'pixelshuffle'
   resi_connection: '1conv'
-
-
 # path
 path:
-  pretrain_network_g: experiments/pretrained_models/HAT_SRx4_ImageNet-pretrain.pth
+  pretrain_network_g: ./experiments/pretrained_models/Real_HAT_GAN_SRx4.pth
   strict_load_g: true
   param_key_g: 'params_ema'
-
 # validation settings
 val:
   save_img: true
   suffix: ~  # add suffix to saved images, if None, use exp name
+
+Run
+$
